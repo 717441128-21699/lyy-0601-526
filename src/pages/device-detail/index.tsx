@@ -170,8 +170,15 @@ const DeviceDetailPage: React.FC = () => {
             timeSlots={timeSlots}
             selectedSlots={selectedSlots}
             onSelect={handleSlotSelect}
-            disabledSlots={device.status === 'unavailable' ? timeSlots.map(s => s.id) : []}
+            disabledSlots={device.status !== 'available' ? timeSlots.map(s => s.id) : []}
           />
+          {device.status !== 'available' && (
+            <Text className={styles.disabledHint}>
+              {device.status === 'maintenance' ? '⚠️ 设备维护中，暂不可预约' :
+               device.status === 'occupied' ? '⚠️ 设备使用中，暂不可预约' :
+               '⚠️ 设备不可用，暂不可预约'}
+            </Text>
+          )}
         </View>
       </View>
 

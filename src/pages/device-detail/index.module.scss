@@ -203,3 +203,14 @@
   font-size: $font-size-sm;
   color: $color-text-tertiary;
 }
+
+.disabledHint {
+  display: block;
+  text-align: center;
+  font-size: $font-size-sm;
+  color: $color-warning;
+  margin-top: $spacing-md;
+  padding: $spacing-sm;
+  background: rgba(245, 158, 11, 0.1);
+  border-radius: $radius-md;
+}

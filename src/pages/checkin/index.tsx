@@ -22,6 +22,7 @@ const CheckinPage: React.FC = () => {
   const [historyList, setHistoryList] = useState<Reservation[]>([]);
   const [loading, setLoading] = useState(false);
   const [showQRCode, setShowQRCode] = useState(false);
+  const [selectedCheckinId, setSelectedCheckinId] = useState<string>('');
 
   const tabs: { key: TabType; label: string }[] = [
     { key: 'current', label: '使用中' },
@@ -62,6 +63,7 @@ const CheckinPage: React.FC = () => {
 
   const handleCheckIn = async (reservation: Reservation) => {
     console.log('[CheckinPage] 签到:', reservation.id);
+    setSelectedCheckinId(reservation.id);
     setShowQRCode(true);
   };
 
@@ -72,23 +74,28 @@ const CheckinPage: React.FC = () => {
     });
   };
 
-  const handleConfirmCheckIn = async (reservationId: string) => {
+  const handleConfirmCheckIn = async () => {
     Taro.showModal({
       title: '确认签到',
       content: '确定要完成签到吗？请确保已到达实验室。',
       success: async (res) => {
         if (res.confirm) {
-          console.log('[CheckinPage] 确认签到:', reservationId);
-          const idx = reservations.findIndex(r => r.id === reservationId);
+          console.log('[CheckinPage] 确认签到:', selectedCheckinId);
+          const idx = reservations.findIndex(r => r.id === selectedCheckinId);
           if (idx !== -1) {
             const now = new Date();
             const checkInTime = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
             reservations[idx].checkInTime = checkInTime;
             reservations[idx].status = 'approved';
             console.log('[CheckinPage] 更新签到时间:', checkInTime);
+            
+            const updatedReservation = reservations[idx];
+            setCurrentReservation(updatedReservation);
           }
           Taro.showToast({ title: '签到成功', icon: 'success' });
           setShowQRCode(false);
+          setSelectedCheckinId('');
+          setActiveTab('current');
           loadData();
         }
       }
@@ -206,7 +213,10 @@ const CheckinPage: React.FC = () => {
   };
 
   const renderQRCodeModal = () => {
-    if (!showQRCode || !pendingList[0]) return null;
+    if (!showQRCode || !selectedCheckinId) return null;
+
+    const targetReservation = pendingList.find(r => r.id === selectedCheckinId);
+    if (!targetReservation) return null;
 
     return (
       <View
@@ -233,15 +243,23 @@ const CheckinPage: React.FC = () => {
           }}
           onClick={(e) => e.stopPropagation()}
         >
+          <View style={{ textAlign: 'center', marginBottom: 32 }}>
+            <Text style={{ fontSize: 32, fontWeight: 600, color: '#0F172A', marginBottom: 8 }}>
+              {targetReservation.deviceName}
+            </Text>
+            <Text style={{ fontSize: 24, color: '#64748B' }}>
+              {targetReservation.labName} · {targetReservation.startTime}-{targetReservation.endTime}
+            </Text>
+          </View>
           <QRCodeDisplay
-            reservationId={pendingList[0].id}
+            reservationId={targetReservation.id}
             userId={user.id}
             size={400}
           />
           <View
             className={classnames(styles.actionBtn, styles.primaryBtn)}
             style={{ marginTop: 32 }}
-            onClick={() => handleConfirmCheckIn(pendingList[0].id)}
+            onClick={() => handleConfirmCheckIn()}
           >
             <Text className={styles.btnText}>完成签到</Text>
           </View>

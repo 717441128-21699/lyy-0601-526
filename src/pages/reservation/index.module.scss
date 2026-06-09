@@ -261,3 +261,135 @@
   color: $color-text-primary;
   font-weight: $font-weight-medium;
 }
+
+/* 审核面板样式 */
+.auditTabs {
+  display: flex;
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-sm;
+  margin-bottom: $spacing-lg;
+}
+
+.auditTabItem {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $spacing-md;
+  border-radius: $radius-md;
+  transition: all $transition-base;
+
+  &.auditTabActive {
+    background: $color-primary;
+  }
+}
+
+.auditTabText {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  margin-bottom: $spacing-xs;
+
+  .auditTabActive & {
+    color: $color-text-white;
+    font-weight: $font-weight-medium;
+  }
+}
+
+.auditTabCount {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-bold;
+  color: $color-text-tertiary;
+
+  .auditTabActive & {
+    color: $color-text-white;
+  }
+}
+
+.auditCard {
+  background: $color-bg-card;
+  border-radius: $radius-xl;
+  padding: $spacing-xl;
+  margin-bottom: $spacing-md;
+  box-shadow: $shadow-card;
+}
+
+.auditCardHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: $spacing-md;
+}
+
+.auditDeviceName {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  display: block;
+  margin-bottom: $spacing-xs;
+}
+
+.auditDeviceInfo {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}
+
+.auditCardBody {
+  margin-bottom: $spacing-lg;
+}
+
+.auditCardText {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  line-height: 1.8;
+  display: block;
+}
+
+.auditRemark {
+  display: block;
+  font-size: $font-size-sm;
+  color: $color-primary;
+  margin-top: $spacing-sm;
+  padding: $spacing-sm;
+  background: rgba(37, 99, 235, 0.05);
+  border-radius: $radius-sm;
+}
+
+.auditCardActions {
+  display: flex;
+  gap: $spacing-md;
+  justify-content: flex-end;
+}
+
+.auditBtnReject {
+  height: 64rpx;
+  padding: 0 $spacing-lg;
+  border-radius: $radius-button;
+  border: 2rpx solid $color-error;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auditBtnRejectText {
+  font-size: $font-size-sm;
+  color: $color-error;
+  font-weight: $font-weight-medium;
+}
+
+.auditBtnApprove {
+  height: 64rpx;
+  padding: 0 $spacing-lg;
+  border-radius: $radius-button;
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auditBtnApproveText {
+  font-size: $font-size-sm;
+  color: $color-text-white;
+  font-weight: $font-weight-medium;
+}

@@ -5,12 +5,14 @@ import classnames from 'classnames';
 import EmptyState from '@/components/EmptyState';
 import StatusBadge from '@/components/StatusBadge';
 import { scheduleList, reservations } from '@/data/reservations';
+import { labs } from '@/data/labs';
 import { useUserStore } from '@/store/useUserStore';
 import styles from './index.module.scss';
 
 const SchedulePage: React.FC = () => {
   const { user } = useUserStore();
-  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
+  const today = new Date().toISOString().split('T')[0];
+  const [selectedDate, setSelectedDate] = useState(today);
 
   const dates = Array.from({ length: 7 }, (_, i) => {
     const d = new Date();
@@ -20,9 +22,37 @@ const SchedulePage: React.FC = () => {
 
   const weekDays = ['日', '一', '二', '三', '四', '五', '六'];
 
+  const assistantLabs = ['l001', 'l002'];
+
   const daySchedules = useMemo(() => {
-    return scheduleList.filter(s => s.date === selectedDate && s.assistantId === 'a001');
-  }, [selectedDate]);
+    if (selectedDate !== today) {
+      return [];
+    }
+    
+    return assistantLabs.map(labId => {
+      const labSchedule = scheduleList.find(s => s.labId === labId && s.date === today);
+      if (labSchedule) return labSchedule;
+      
+      const labReservations = reservations.filter(r => r.date === today && r.labId === labId);
+      const lab = labs.find(l => l.id === labId);
+      
+      return {
+        id: `gen-${labId}`,
+        date: today,
+        labId,
+        labName: lab?.name || '未知实验室',
+        assistantId: 'a001',
+        assistantName: '李实验员',
+        startTime: '08:00',
+        endTime: '22:00',
+        reservations: labReservations,
+        pendingCount: labReservations.filter(r => r.status === 'pending').length,
+        approvedCount: labReservations.filter(r => r.status === 'approved').length,
+        noCheckInCount: labReservations.filter(r => r.status === 'approved' && !r.checkInTime).length,
+        noCheckInList: labReservations.filter(r => r.status === 'approved' && !r.checkInTime),
+      };
+    });
+  }, [selectedDate, today]);
 
   const totalStats = useMemo(() => {
     const dayReservations = reservations.filter(r => r.date === selectedDate);

@@ -18,9 +18,12 @@ import styles from './index.module.scss';
 
 type TabType = 'device' | 'lab' | 'my' | 'audit';
 
+type AuditTabType = 'pending' | 'approved' | 'rejected';
+
 const ReservationPage: React.FC = () => {
   const { user, role } = useUserStore();
   const [activeTab, setActiveTab] = useState<TabType>('device');
+  const [auditTab, setAuditTab] = useState<AuditTabType>('pending');
   const [selectedLab, setSelectedLab] = useState<string>('');
   const [selectedType, setSelectedType] = useState<string>('');
   const [selectedDate, setSelectedDate] = useState<string>(formatDate(new Date()));
@@ -28,6 +31,8 @@ const ReservationPage: React.FC = () => {
   const [labList, setLabList] = useState<Lab[]>([]);
   const [myReservations, setMyReservations] = useState<Reservation[]>([]);
   const [pendingReservations, setPendingReservations] = useState<Reservation[]>([]);
+  const [approvedReservations, setApprovedReservations] = useState<Reservation[]>([]);
+  const [rejectedReservations, setRejectedReservations] = useState<Reservation[]>([]);
   const [loading, setLoading] = useState(false);
 
   const dateRange = Array.from({ length: 7 }, (_, i) => {
@@ -53,10 +58,10 @@ const ReservationPage: React.FC = () => {
 
   useEffect(() => {
     loadData();
-  }, [activeTab, selectedLab, selectedType, selectedDate, role, user.id]);
+  }, [activeTab, selectedLab, selectedType, selectedDate, role, user.id, auditTab]);
 
   const loadData = useCallback(() => {
-    console.log('[ReservationPage] 加载数据, tab:', activeTab);
+    console.log('[ReservationPage] 加载数据, tab:', activeTab, 'auditTab:', auditTab);
     setLoading(true);
 
     setTimeout(() => {
@@ -76,11 +81,15 @@ const ReservationPage: React.FC = () => {
         setMyReservations(myRes);
       } else if (activeTab === 'audit') {
         const pending = reservations.filter(r => r.status === 'pending');
+        const approved = reservations.filter(r => r.status === 'approved');
+        const rejected = reservations.filter(r => r.status === 'rejected');
         setPendingReservations(pending);
+        setApprovedReservations(approved);
+        setRejectedReservations(rejected);
       }
       setLoading(false);
     }, 300);
-  }, [activeTab, selectedLab, selectedType, user.id]);
+  }, [activeTab, selectedLab, selectedType, user.id, auditTab]);
 
   const handleFilterChange = (type: 'lab' | 'type' | 'date', value: string) => {
     console.log('[ReservationPage] 筛选变更:', type, value);
@@ -126,6 +135,14 @@ const ReservationPage: React.FC = () => {
       success: async (res) => {
         if (res.confirm) {
           console.log('[ReservationPage] 审核预约:', reservationId, status);
+          
+          const idx = reservations.findIndex(r => r.id === reservationId);
+          if (idx !== -1) {
+            reservations[idx].status = status;
+            reservations[idx].auditor = '李实验员';
+            reservations[idx].auditRemark = status === 'approved' ? '审核通过，请按时到达' : '审核拒绝，请选择其他时段';
+          }
+          
           Taro.showToast({ title: `${action}成功`, icon: 'success' });
           loadData();
         }
@@ -318,51 +335,99 @@ const ReservationPage: React.FC = () => {
     }
 
     if (activeTab === 'audit' && role === 'labAssistant') {
+      const auditTabs: { key: AuditTabType; label: string }[] = [
+        { key: 'pending', label: '待审核' },
+        { key: 'approved', label: '已通过' },
+        { key: 'rejected', label: '已拒绝' },
+      ];
+
+      const getCurrentList = () => {
+        switch (auditTab) {
+          case 'pending': return pendingReservations;
+          case 'approved': return approvedReservations;
+          case 'rejected': return rejectedReservations;
+          default: return [];
+        }
+      };
+
+      const currentList = getCurrentList();
+
+      const getEmptyState = () => {
+        switch (auditTab) {
+          case 'pending':
+            return { icon: '✅', title: '暂无待审核申请', desc: '所有预约申请都已处理完毕' };
+          case 'approved':
+            return { icon: '📋', title: '暂无已通过申请', desc: '还没有通过的预约申请' };
+          case 'rejected':
+            return { icon: '❌', title: '暂无已拒绝申请', desc: '还没有拒绝的预约申请' };
+          default:
+            return { icon: '📋', title: '暂无数据', desc: '' };
+        }
+      };
+
+      const emptyState = getEmptyState();
+
       return (
         <View className={styles.auditPanel}>
-          <View className={styles.sectionHeader}>
-            <Text className={styles.sectionTitle}>待审核申请</Text>
-            <Text className={styles.sectionCount}>{pendingReservations.length}条</Text>
+          <View className={styles.auditTabs}>
+            {auditTabs.map((tab) => (
+              <View
+                key={tab.key}
+                className={classnames(styles.auditTabItem, auditTab === tab.key && styles.auditTabActive)}
+                onClick={() => setAuditTab(tab.key)}
+              >
+                <Text className={styles.auditTabText}>{tab.label}</Text>
+                <Text className={styles.auditTabCount}>
+                  {tab.key === 'pending' ? pendingReservations.length :
+                   tab.key === 'approved' ? approvedReservations.length :
+                   rejectedReservations.length}
+                </Text>
+              </View>
+            ))}
           </View>
-          {pendingReservations.length > 0 ? (
-            pendingReservations.map((reservation) => (
-              <View key={reservation.id} className="card">
-                <View className="flexBetween" style={{ marginBottom: 16 }}>
+
+          {currentList.length > 0 ? (
+            currentList.map((reservation) => (
+              <View key={reservation.id} className={styles.auditCard}>
+                <View className={styles.auditCardHeader}>
                   <View>
-                    <Text style={{ fontSize: 30, fontWeight: 600 }}>{reservation.deviceName}</Text>
-                    <Text style={{ fontSize: 24, color: '#64748B' }}>{reservation.userName} · {reservation.labName}</Text>
+                    <Text className={styles.auditDeviceName}>{reservation.deviceName}</Text>
+                    <Text className={styles.auditDeviceInfo}>{reservation.userName} · {reservation.labName}</Text>
                   </View>
                   <StatusBadge status={reservation.status} />
                 </View>
-                <View style={{ marginBottom: 16 }}>
-                  <Text style={{ fontSize: 26, color: '#64748B' }}>
-                    {reservation.date} {reservation.startTime}-{reservation.endTime}
+                <View className={styles.auditCardBody}>
+                  <Text className={styles.auditCardText}>
+                    📅 {reservation.date} {reservation.startTime}-{reservation.endTime}
                   </Text>
-                  <Text style={{ fontSize: 26, color: '#64748B' }}>用途：{reservation.purpose}</Text>
+                  <Text className={styles.auditCardText}>📝 用途：{reservation.purpose}</Text>
+                  {reservation.auditRemark && (
+                    <Text className={styles.auditRemark}>💬 {reservation.auditRemark}</Text>
+                  )}
                 </View>
-                <View className="flex" style={{ gap: 16, justifyContent: 'flex-end' }}>
-                  <View
-                    className="btnSecondary"
-                    style={{ height: 64, padding: '0 32rpx' }}
-                    onClick={() => handleAudit(reservation.id, 'rejected')}
-                  >
-                    <Text style={{ color: '#EF4444' }}>拒绝</Text>
+                {auditTab === 'pending' && (
+                  <View className={styles.auditCardActions}>
+                    <View
+                      className={styles.auditBtnReject}
+                      onClick={() => handleAudit(reservation.id, 'rejected')}
+                    >
+                      <Text className={styles.auditBtnRejectText}>拒绝</Text>
+                    </View>
+                    <View
+                      className={styles.auditBtnApprove}
+                      onClick={() => handleAudit(reservation.id, 'approved')}
+                    >
+                      <Text className={styles.auditBtnApproveText}>通过</Text>
+                    </View>
                   </View>
-                  <View
-                    className="btnPrimary"
-                    style={{ height: 64, padding: '0 32rpx' }}
-                    onClick={() => handleAudit(reservation.id, 'approved')}
-                  >
-                    <Text>通过</Text>
-                  </View>
-                </View>
+                )}
               </View>
             ))
           ) : (
             <EmptyState
-              icon="✅"
-              title="暂无待审核申请"
-              description="所有预约申请都已处理完毕"
+              icon={emptyState.icon}
+              title={emptyState.title}
+              description={emptyState.desc}
             />
           )}
         </View>

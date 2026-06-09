@@ -1,5 +1,10 @@
 import { Reservation, ViolationRecord, Schedule } from '@/types';
 
+const todayDate = new Date().toISOString().split('T')[0];
+const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+const twoDaysAgo = new Date(Date.now() - 86400000 * 2).toISOString().split('T')[0];
+const tomorrow = new Date(Date.now() + 86400000).toISOString().split('T')[0];
+
 export const reservations: Reservation[] = [
   {
     id: 'r001',
@@ -9,7 +14,7 @@ export const reservations: Reservation[] = [
     labName: '计算机基础实验室',
     userId: 'u001',
     userName: '张同学',
-    date: '2026-06-10',
+    date: todayDate,
     timeSlot: '上午',
     startTime: '10:00',
     endTime: '11:40',
@@ -30,7 +35,7 @@ export const reservations: Reservation[] = [
     labName: '人工智能实验室',
     userId: 'u001',
     userName: '张同学',
-    date: '2026-06-10',
+    date: todayDate,
     timeSlot: '下午',
     startTime: '14:00',
     endTime: '15:40',
@@ -47,7 +52,7 @@ export const reservations: Reservation[] = [
     labName: '嵌入式系统实验室',
     userId: 'u001',
     userName: '张同学',
-    date: '2026-06-09',
+    date: yesterday,
     timeSlot: '晚上',
     startTime: '19:00',
     endTime: '20:40',
@@ -71,7 +76,7 @@ export const reservations: Reservation[] = [
     labName: '嵌入式系统实验室',
     userId: 'u001',
     userName: '张同学',
-    date: '2026-06-08',
+    date: twoDaysAgo,
     timeSlot: '下午',
     startTime: '16:00',
     endTime: '17:40',
@@ -88,7 +93,7 @@ export const reservations: Reservation[] = [
     labName: '人工智能实验室',
     userId: 'u001',
     userName: '张同学',
-    date: '2026-06-11',
+    date: tomorrow,
     timeSlot: '上午',
     startTime: '08:00',
     endTime: '09:40',
@@ -107,7 +112,7 @@ export const reservations: Reservation[] = [
     labName: '软件工程实验室',
     userId: 'u001',
     userName: '张同学',
-    date: '2026-06-05',
+    date: twoDaysAgo,
     timeSlot: '下午',
     startTime: '14:00',
     endTime: '15:40',
@@ -126,7 +131,7 @@ export const reservations: Reservation[] = [
     labName: '网络安全实验室',
     userId: 'u002',
     userName: '赵同学',
-    date: '2026-06-10',
+    date: todayDate,
     timeSlot: '上午',
     startTime: '10:00',
     endTime: '11:40',
@@ -143,7 +148,7 @@ export const reservations: Reservation[] = [
     labName: '计算机基础实验室',
     userId: 'u003',
     userName: '孙同学',
-    date: '2026-06-10',
+    date: todayDate,
     timeSlot: '下午',
     startTime: '14:00',
     endTime: '15:40',
@@ -184,37 +189,39 @@ export interface ScheduleWithStats extends Schedule {
   noCheckInList: Reservation[];
 }
 
+const today = new Date().toISOString().split('T')[0];
+
 export const todaySchedule: ScheduleWithStats = {
   id: 's001',
-  date: '2026-06-10',
+  date: today,
   labId: 'l001',
   labName: '计算机基础实验室',
   assistantId: 'a001',
   assistantName: '李实验员',
   startTime: '08:00',
   endTime: '22:00',
-  reservations: reservations.filter(r => r.date === '2026-06-10' && r.labId === 'l001'),
-  pendingCount: reservations.filter(r => r.date === '2026-06-10' && r.labId === 'l001' && r.status === 'pending').length,
-  approvedCount: reservations.filter(r => r.date === '2026-06-10' && r.labId === 'l001' && r.status === 'approved').length,
-  noCheckInCount: reservations.filter(r => r.date === '2026-06-10' && r.labId === 'l001' && r.status === 'approved' && !r.checkInTime).length,
-  noCheckInList: reservations.filter(r => r.date === '2026-06-10' && r.labId === 'l001' && r.status === 'approved' && !r.checkInTime),
+  reservations: reservations.filter(r => r.date === today && r.labId === 'l001'),
+  pendingCount: reservations.filter(r => r.date === today && r.labId === 'l001' && r.status === 'pending').length,
+  approvedCount: reservations.filter(r => r.date === today && r.labId === 'l001' && r.status === 'approved').length,
+  noCheckInCount: reservations.filter(r => r.date === today && r.labId === 'l001' && r.status === 'approved' && !r.checkInTime).length,
+  noCheckInList: reservations.filter(r => r.date === today && r.labId === 'l001' && r.status === 'approved' && !r.checkInTime),
 };
 
 export const scheduleList: ScheduleWithStats[] = [
   todaySchedule,
   {
     id: 's002',
-    date: '2026-06-10',
+    date: today,
     labId: 'l002',
     labName: '人工智能实验室',
     assistantId: 'a001',
     assistantName: '李实验员',
     startTime: '09:00',
     endTime: '18:00',
-    reservations: reservations.filter(r => r.date === '2026-06-10' && r.labId === 'l002'),
-    pendingCount: reservations.filter(r => r.date === '2026-06-10' && r.labId === 'l002' && r.status === 'pending').length,
-    approvedCount: reservations.filter(r => r.date === '2026-06-10' && r.labId === 'l002' && r.status === 'approved').length,
-    noCheckInCount: reservations.filter(r => r.date === '2026-06-10' && r.labId === 'l002' && r.status === 'approved' && !r.checkInTime).length,
-    noCheckInList: reservations.filter(r => r.date === '2026-06-10' && r.labId === 'l002' && r.status === 'approved' && !r.checkInTime),
+    reservations: reservations.filter(r => r.date === today && r.labId === 'l002'),
+    pendingCount: reservations.filter(r => r.date === today && r.labId === 'l002' && r.status === 'pending').length,
+    approvedCount: reservations.filter(r => r.date === today && r.labId === 'l002' && r.status === 'approved').length,
+    noCheckInCount: reservations.filter(r => r.date === today && r.labId === 'l002' && r.status === 'approved' && !r.checkInTime).length,
+    noCheckInList: reservations.filter(r => r.date === today && r.labId === 'l002' && r.status === 'approved' && !r.checkInTime),
   },
 ];
