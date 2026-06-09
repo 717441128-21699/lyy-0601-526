@@ -1,0 +1,107 @@
+@use '@/styles/variables.scss' as *;
+
+.item {
+  position: relative;
+  display: flex;
+  padding: $spacing-lg;
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  margin-bottom: $spacing-md;
+  transition: all $transition-base;
+
+  &:active {
+    transform: scale(0.99);
+  }
+
+  &.unread {
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(59, 130, 246, 0.02) 100%);
+  }
+}
+
+.iconWrapper {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: $radius-lg;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-right: $spacing-md;
+
+  &.blue {
+    background: $color-tag-blue;
+  }
+
+  &.green {
+    background: $color-tag-green;
+  }
+
+  &.yellow {
+    background: $color-tag-yellow;
+  }
+
+  &.red {
+    background: $color-tag-red;
+  }
+}
+
+.icon {
+  font-size: 40rpx;
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $spacing-xs;
+}
+
+.title {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  @include text-ellipsis;
+  flex: 1;
+  margin-right: $spacing-md;
+}
+
+.time {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  flex-shrink: 0;
+}
+
+.preview {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  line-height: 1.5;
+  @include text-ellipsis-multi(2);
+  margin-bottom: $spacing-sm;
+}
+
+.typeTag {
+  display: inline-flex;
+  padding: 2rpx 12rpx;
+  background: $color-bg-page;
+  border-radius: $radius-xs;
+}
+
+.typeText {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.dot {
+  position: absolute;
+  top: $spacing-md;
+  right: $spacing-md;
+  width: 16rpx;
+  height: 16rpx;
+  background: $color-error;
+  border-radius: $radius-round;
+}

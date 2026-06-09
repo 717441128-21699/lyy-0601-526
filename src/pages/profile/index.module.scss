@@ -1,0 +1,301 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  background-color: $color-bg-page;
+  padding-bottom: 48rpx;
+}
+
+.header {
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  padding: $spacing-xl $page-padding $spacing-lg * 2;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -200rpx;
+    right: -100rpx;
+    width: 400rpx;
+    height: 400rpx;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -100rpx;
+    left: -80rpx;
+    width: 280rpx;
+    height: 280rpx;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+  }
+}
+
+.userInfo {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: $spacing-lg;
+}
+
+.avatar {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: $radius-round;
+  background: $color-text-white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 60rpx;
+  font-weight: $font-weight-bold;
+  color: $color-primary;
+  box-shadow: $shadow-float;
+}
+
+.userDetails {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+.userNameRow {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  flex-wrap: wrap;
+}
+
+.userName {
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  color: $color-text-white;
+}
+
+.roleTag {
+  display: inline-flex;
+  align-items: center;
+  padding: 4rpx $spacing-sm;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: $radius-sm;
+  font-size: $font-size-xs;
+  color: $color-text-white;
+}
+
+.userId {
+  font-size: $font-size-sm;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.userMajor {
+  font-size: $font-size-sm;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.creditSection {
+  background: $color-bg-card;
+  margin: -60rpx $page-padding $spacing-lg;
+  border-radius: $radius-xl;
+  box-shadow: $shadow-float;
+  padding: $spacing-xl;
+  position: relative;
+  z-index: 2;
+}
+
+.creditRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $spacing-md;
+}
+
+.creditLabel {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  font-weight: $font-weight-semibold;
+}
+
+.creditValue {
+  font-size: 56rpx;
+  font-weight: $font-weight-bold;
+  color: $color-primary;
+}
+
+.creditBar {
+  height: 12rpx;
+  background: $color-bg-page;
+  border-radius: $radius-round;
+  overflow: hidden;
+  margin-bottom: $spacing-sm;
+}
+
+.creditFill {
+  height: 100%;
+  background: linear-gradient(90deg, $color-primary 0%, $color-primary-light 100%);
+  border-radius: $radius-round;
+  transition: width $transition-base;
+}
+
+.creditTips {
+  display: flex;
+  justify-content: space-between;
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.creditLevel {
+  font-size: $font-size-sm;
+  color: $color-success;
+  font-weight: $font-weight-semibold;
+}
+
+.menuCard {
+  background: $color-bg-card;
+  margin: 0 $page-padding $spacing-md;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-card;
+  overflow: hidden;
+}
+
+.menuTitle {
+  padding: $spacing-md $spacing-lg $spacing-sm;
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+  font-weight: $font-weight-medium;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  padding: $spacing-lg;
+  border-top: 1rpx solid $color-divider;
+  transition: background-color $transition-base;
+  position: relative;
+
+  &:active {
+    background: $color-bg-page;
+  }
+
+  &:first-child {
+    border-top: none;
+  }
+}
+
+.menuIcon {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: $radius-md;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: $spacing-md;
+  font-size: 32rpx;
+}
+
+.menuText {
+  flex: 1;
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  font-weight: $font-weight-medium;
+}
+
+.menuSubtitle {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  margin-top: 4rpx;
+}
+
+.menuArrow {
+  width: 32rpx;
+  height: 32rpx;
+  border-top: 3rpx solid $color-text-tertiary;
+  border-right: 3rpx solid $color-text-tertiary;
+  transform: rotate(45deg);
+}
+
+.menuBadge {
+  min-width: 36rpx;
+  height: 36rpx;
+  padding: 0 10rpx;
+  background: $color-error;
+  border-radius: $radius-round;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: $spacing-sm;
+}
+
+.menuBadgeText {
+  font-size: 22rpx;
+  color: $color-text-white;
+  font-weight: 600;
+}
+
+.roleSwitch {
+  display: flex;
+  align-items: center;
+  padding: $spacing-md $spacing-lg;
+  background: rgba(37, 99, 235, 0.05);
+  margin: 0 $page-padding $spacing-lg;
+  border-radius: $radius-lg;
+  border: 1rpx dashed rgba(37, 99, 235, 0.3);
+}
+
+.roleSwitchText {
+  flex: 1;
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}
+
+.roleSwitchBtn {
+  padding: $spacing-sm $spacing-lg;
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  border-radius: $radius-button;
+  font-size: $font-size-sm;
+  color: $color-text-white;
+  font-weight: $font-weight-medium;
+}
+
+.iconBlue { background: $color-tag-blue; }
+.iconGreen { background: $color-tag-green; }
+.iconYellow { background: $color-tag-yellow; }
+.iconRed { background: $color-tag-red; }
+.iconPurple { background: rgba(139, 92, 246, 0.15); }
+.iconOrange { background: rgba(249, 115, 22, 0.15); }
+
+.statRow {
+  display: flex;
+  justify-content: space-around;
+  padding: $spacing-lg $spacing-md;
+  border-bottom: 1rpx solid $color-divider;
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-xs;
+}
+
+.statValue {
+  font-size: 40rpx;
+  font-weight: $font-weight-bold;
+  color: $color-text-primary;
+}
+
+.statLabel {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.bottomGap {
+  height: 48rpx;
+}

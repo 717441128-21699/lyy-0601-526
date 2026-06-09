@@ -1,0 +1,284 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  background: $color-bg-page;
+}
+
+.datePicker {
+  display: flex;
+  padding: $spacing-sm $page-padding;
+  background: $color-bg-card;
+  border-bottom: 1rpx solid $color-divider;
+  gap: $spacing-sm;
+  white-space: nowrap;
+}
+
+.dateItem {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $spacing-sm $spacing-md;
+  border-radius: $radius-md;
+  background: $color-bg-page;
+  min-width: 80rpx;
+  transition: all $transition-base;
+
+  &.active {
+    background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  }
+}
+
+.dateWeek {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+
+  .active & {
+    color: $color-text-white;
+  }
+}
+
+.dateDay {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-bold;
+  color: $color-text-primary;
+
+  .active & {
+    color: $color-text-white;
+  }
+}
+
+.filterBar {
+  display: flex;
+  padding: $spacing-sm $page-padding;
+  background: $color-bg-card;
+  border-bottom: 1rpx solid $color-divider;
+  gap: $spacing-md;
+}
+
+.filterItem {
+  flex: 1;
+  text-align: center;
+  padding: $spacing-sm;
+  border-radius: $radius-sm;
+  transition: all $transition-base;
+
+  &.active {
+    background: rgba(37, 99, 235, 0.1);
+  }
+}
+
+.filterText {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+
+  .active & {
+    color: $color-primary;
+    font-weight: $font-weight-semibold;
+  }
+}
+
+.listContainer {
+  padding: $spacing-md $page-padding;
+}
+
+.card {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-card;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-md;
+  transition: all $transition-base;
+
+  &:active {
+    transform: scale(0.99);
+  }
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: $spacing-sm;
+}
+
+.cardTitle {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.cardSubtitle {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  margin-bottom: $spacing-xs;
+}
+
+.cardTime {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+  line-height: 1.5;
+}
+
+.listItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $spacing-lg;
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-card;
+  margin-bottom: $spacing-md;
+}
+
+.itemLeft {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+}
+
+.itemIcon {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: $radius-md;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36rpx;
+}
+
+.itemContent {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+}
+
+.itemTitle {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.itemDesc {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+}
+
+.itemValue {
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  font-weight: $font-weight-semibold;
+}
+
+.itemArrow {
+  width: 24rpx;
+  height: 24rpx;
+  border-top: 3rpx solid $color-text-tertiary;
+  border-right: 3rpx solid $color-text-tertiary;
+  transform: rotate(45deg);
+}
+
+.formSection {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-card;
+  padding: $spacing-xl;
+  margin: $spacing-md $page-padding;
+}
+
+.formTitle {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-lg;
+}
+
+.formItem {
+  margin-bottom: $spacing-lg;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.formLabel {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  margin-bottom: $spacing-sm;
+  display: block;
+}
+
+.formInput {
+  width: 100%;
+  height: 88rpx;
+  padding: 0 $spacing-lg;
+  background: $color-bg-page;
+  border-radius: $radius-md;
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  border: 2rpx solid $color-divider;
+}
+
+.formTextarea {
+  width: 100%;
+  min-height: 240rpx;
+  padding: $spacing-lg;
+  background: $color-bg-page;
+  border-radius: $radius-md;
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  border: 2rpx solid $color-divider;
+  line-height: 1.6;
+}
+
+.bottomBar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: $color-bg-card;
+  padding: $spacing-lg $page-padding calc($spacing-lg + env(safe-area-inset-bottom));
+  box-shadow: 0 -4rpx 20rpx rgba(0, 0, 0, 0.08);
+  display: flex;
+  gap: $spacing-md;
+}
+
+.btnPrimary {
+  flex: 1;
+  height: 88rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  border-radius: $radius-button;
+  font-size: $font-size-md;
+  color: $color-text-white;
+  font-weight: $font-weight-semibold;
+  box-shadow: $shadow-card;
+}
+
+.btnSecondary {
+  flex: 1;
+  height: 88rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $color-bg-page;
+  border-radius: $radius-button;
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  font-weight: $font-weight-medium;
+  border: 2rpx solid $color-divider;
+}
+
+.btnText {
+  font-size: $font-size-md;
+  color: inherit;
+  font-weight: inherit;
+}
+
+.iconBlue { background: $color-tag-blue; }
+.iconGreen { background: $color-tag-green; }
+.iconYellow { background: $color-tag-yellow; }
+.iconRed { background: $color-tag-red; }

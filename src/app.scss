@@ -1,0 +1,142 @@
+@use '@/styles/compat.scss';
+@use '@/styles/variables.scss' as *;
+
+// 全局样式
+page {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC', 'Hiragino Sans GB',
+    sans-serif;
+  font-size: $font-size-md;
+  line-height: $line-height-normal;
+  color: $color-text-primary;
+  background: linear-gradient(180deg, #EFF6FF 0%, $color-bg-page 100%);
+  min-height: 100vh;
+}
+
+// 页面根容器
+.pageContainer {
+  padding: 0 $page-padding;
+  padding-bottom: 48rpx;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+// 通用卡片样式
+.card {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-card;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-md;
+}
+
+// 渐变按钮
+.btnPrimary {
+  @include button-reset;
+  height: $button-height-md;
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  color: $color-text-white;
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  border-radius: $radius-button;
+  min-width: 160rpx;
+  transition: all $transition-base;
+
+  &:active {
+    opacity: 0.9;
+    transform: scale(0.98);
+  }
+
+  &.disabled {
+    background: $color-text-disabled;
+  }
+}
+
+.btnSecondary {
+  @include button-reset;
+  height: $button-height-md;
+  background: $color-bg-card;
+  color: $color-primary;
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  border: 2rpx solid $color-primary;
+  border-radius: $radius-button;
+  min-width: 160rpx;
+  transition: all $transition-base;
+
+  &:active {
+    opacity: 0.9;
+    transform: scale(0.98);
+  }
+}
+
+// 标签样式
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 4rpx 16rpx;
+  border-radius: $radius-xs;
+  font-size: $font-size-xs;
+  white-space: nowrap;
+
+  &.blue {
+    background: $color-tag-blue;
+    color: $color-primary;
+  }
+
+  &.green {
+    background: $color-tag-green;
+    color: $color-success;
+  }
+
+  &.yellow {
+    background: $color-tag-yellow;
+    color: $color-warning;
+  }
+
+  &.red {
+    background: $color-tag-red;
+    color: $color-error;
+  }
+}
+
+// 分割线
+.divider {
+  height: 1rpx;
+  background: $color-divider;
+  margin: $spacing-md 0;
+}
+
+// flex 布局工具
+.flex {
+  display: flex;
+}
+
+.flexCenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flexBetween {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flexColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex1 {
+  flex: 1;
+}
+
+// 文本截断
+.textEllipsis {
+  @include text-ellipsis;
+}
+
+.textEllipsis2 {
+  @include text-ellipsis-multi(2);
+}

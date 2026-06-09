@@ -1,0 +1,17 @@
+@use '@/styles/variables.scss' as *;
+.page { min-height: 100vh; background: $color-bg-page; padding-bottom: 160rpx; }
+.section { background: $color-bg-card; border-radius: $radius-lg; box-shadow: $shadow-card; padding: $spacing-xl; margin: $spacing-md $page-padding; }
+.sectionTitle { font-size: $font-size-md; font-weight: $font-weight-semibold; color: $color-text-primary; margin-bottom: $spacing-md; }
+.formItem { margin-bottom: $spacing-lg; }
+.label { font-size: $font-size-sm; color: $color-text-secondary; margin-bottom: $spacing-sm; display: block; }
+.textarea { width: 100%; min-height: 200rpx; padding: $spacing-lg; background: $color-bg-page; border-radius: $radius-md; font-size: $font-size-md; color: $color-text-primary; border: 2rpx solid $color-divider; line-height: 1.6; }
+.radioGroup { display: flex; flex-wrap: wrap; gap: $spacing-md; }
+.radioItem { flex: 1; min-width: 200rpx; padding: $spacing-lg; background: $color-bg-page; border-radius: $radius-md; text-align: center; border: 2rpx solid $color-divider; transition: all $transition-base; }
+.radioItem.selected { background: rgba(37, 99, 235, 0.08); border-color: $color-primary; }
+.radioText { font-size: $font-size-sm; color: $color-text-secondary; }
+.selected .radioText { color: $color-primary; font-weight: $font-weight-medium; }
+.infoBox { padding: $spacing-lg; background: $color-bg-page; border-radius: $radius-md; font-size: $font-size-sm; color: $color-text-secondary; line-height: 1.8; }
+.bottomBar { position: fixed; bottom: 0; left: 0; right: 0; background: $color-bg-card; padding: $spacing-lg $page-padding calc($spacing-lg + env(safe-area-inset-bottom)); box-shadow: 0 -4rpx 20rpx rgba(0,0,0,0.08); display: flex; gap: $spacing-md; }
+.btnPrimary { flex: 1; height: 88rpx; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%); border-radius: $radius-button; font-size: $font-size-md; color: $color-text-white; font-weight: $font-weight-semibold; box-shadow: $shadow-card; }
+.btnSecondary { flex: 1; height: 88rpx; display: flex; align-items: center; justify-content: center; background: $color-bg-page; border-radius: $radius-button; font-size: $font-size-md; color: $color-text-primary; font-weight: $font-weight-medium; border: 2rpx solid $color-divider; }
+.btnText { font-size: $font-size-md; color: inherit; font-weight: inherit; }

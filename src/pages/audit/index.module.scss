@@ -1,0 +1,23 @@
+@use '@/styles/variables.scss' as *;
+.page { min-height: 100vh; background: $color-bg-page; }
+.tabBar { display: flex; background: $color-bg-card; padding: $spacing-sm $page-padding; border-bottom: 1rpx solid $color-divider; }
+.tabItem { flex: 1; text-align: center; padding: $spacing-sm; position: relative; }
+.tabText { font-size: $font-size-sm; color: $color-text-secondary; }
+.tabItem.active .tabText { color: $color-primary; font-weight: $font-weight-semibold; }
+.tabBadge { position: absolute; top: 0; right: 20rpx; min-width: 32rpx; height: 32rpx; background: $color-error; border-radius: 16rpx; display: flex; align-items: center; justify-content: center; padding: 0 8rpx; }
+.tabBadgeText { font-size: 20rpx; color: $color-text-white; font-weight: 600; }
+.list { padding: $spacing-md $page-padding; }
+.card { background: $color-bg-card; border-radius: $radius-lg; box-shadow: $shadow-card; padding: $spacing-lg; margin-bottom: $spacing-md; }
+.cardHeader { display: flex; justify-content: space-between; margin-bottom: $spacing-sm; }
+.deviceName { font-size: $font-size-md; font-weight: $font-weight-semibold; color: $color-text-primary; }
+.userInfo { font-size: $font-size-sm; color: $color-text-secondary; margin-bottom: $spacing-sm; }
+.timeInfo { font-size: $font-size-sm; color: $color-text-tertiary; margin-bottom: $spacing-sm; }
+.purpose { font-size: $font-size-sm; color: $color-text-secondary; background: $color-bg-page; padding: $spacing-sm; border-radius: $radius-sm; margin-bottom: $spacing-md; }
+.actionBar { display: flex; gap: $spacing-sm; }
+.btn { flex: 1; height: 72rpx; display: flex; align-items: center; justify-content: center; border-radius: $radius-button; font-size: $font-size-sm; font-weight: $font-weight-medium; }
+.btnReject { background: rgba(239, 68, 68, 0.1); color: $color-error; }
+.btnApprove { background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%); color: $color-text-white; box-shadow: $shadow-card; }
+.empty { padding: $spacing-xl * 2; text-align: center; }
+.emptyIcon { font-size: 120rpx; margin-bottom: $spacing-md; opacity: 0.6; }
+.emptyText { font-size: $font-size-sm; color: $color-text-tertiary; }
+.loading { display: flex; justify-content: center; padding: $spacing-xl; color: $color-text-tertiary; }

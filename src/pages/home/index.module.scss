@@ -1,0 +1,277 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  background-color: $color-bg-page;
+  padding-bottom: 48rpx;
+}
+
+.header {
+  position: relative;
+  padding: $spacing-lg $page-padding $spacing-xl;
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  border-bottom-left-radius: 40rpx;
+  border-bottom-right-radius: 40rpx;
+  margin-bottom: 100rpx;
+}
+
+.userRow {
+  display: flex;
+  align-items: center;
+  margin-bottom: $spacing-lg;
+}
+
+.avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: $radius-round;
+  border: 4rpx solid rgba(255, 255, 255, 0.3);
+  margin-right: $spacing-md;
+  background: $color-bg-card;
+}
+
+.userInfo {
+  flex: 1;
+}
+
+.greeting {
+  font-size: $font-size-sm;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: $spacing-xs;
+}
+
+.userName {
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  color: $color-text-white;
+  margin-bottom: $spacing-xs;
+}
+
+.department {
+  font-size: $font-size-sm;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.creditCard {
+  position: absolute;
+  bottom: -60rpx;
+  left: $page-padding;
+  right: $page-padding;
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-float;
+  padding: $spacing-lg;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.creditItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.creditValue {
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  color: $color-primary;
+  line-height: 1.2;
+}
+
+.creditLabel {
+  font-size: $font-size-xs;
+  color: $color-text-secondary;
+  margin-top: $spacing-xs;
+}
+
+.creditDivider {
+  width: 1rpx;
+  height: 60rpx;
+  background: $color-divider;
+}
+
+.section {
+  padding: 0 $page-padding;
+  margin-bottom: $spacing-lg;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $spacing-md;
+}
+
+.sectionTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.sectionMore {
+  font-size: $font-size-sm;
+  color: $color-primary;
+}
+
+.noticeCard {
+  display: flex;
+  align-items: center;
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-md $spacing-lg;
+  box-shadow: $shadow-card;
+  margin-bottom: $spacing-lg;
+}
+
+.noticeIcon {
+  font-size: 40rpx;
+  margin-right: $spacing-md;
+}
+
+.noticeContent {
+  flex: 1;
+  overflow: hidden;
+}
+
+.noticeText {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  @include text-ellipsis;
+}
+
+.quickGrid {
+  display: flex;
+  flex-wrap: wrap;
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-md 0;
+  box-shadow: $shadow-card;
+}
+
+.quickItem {
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $spacing-md 0;
+  transition: all $transition-base;
+
+  &:active {
+    opacity: 0.8;
+    transform: scale(0.95);
+  }
+}
+
+.quickIcon {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: $radius-lg;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 44rpx;
+  margin-bottom: $spacing-sm;
+
+  &.blue {
+    background: $color-tag-blue;
+  }
+
+  &.green {
+    background: $color-tag-green;
+  }
+
+  &.yellow {
+    background: $color-tag-yellow;
+  }
+
+  &.purple {
+    background: #EDE9FE;
+  }
+}
+
+.quickText {
+  font-size: $font-size-xs;
+  color: $color-text-primary;
+}
+
+.todayCard {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-card;
+  padding: $spacing-lg;
+}
+
+.todayHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $spacing-md;
+}
+
+.todayTitle {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.todayCount {
+  font-size: $font-size-sm;
+  color: $color-primary;
+  background: $color-tag-blue;
+  padding: 4rpx 16rpx;
+  border-radius: $radius-xs;
+}
+
+.todayContent {
+  display: flex;
+  align-items: center;
+}
+
+.todayDevice {
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  font-weight: $font-weight-medium;
+  margin-bottom: $spacing-xs;
+}
+
+.todayTime {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}
+
+.todayBtn {
+  @include button-reset;
+  height: $button-height-sm;
+  padding: 0 $spacing-lg;
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  color: $color-text-white;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  border-radius: $radius-button;
+  margin-left: auto;
+
+  &:active {
+    opacity: 0.9;
+    transform: scale(0.98);
+  }
+}
+
+.noReservation {
+  text-align: center;
+  padding: $spacing-md 0;
+  color: $color-text-tertiary;
+  font-size: $font-size-sm;
+}
+
+.deviceList {
+  padding: 0 $page-padding;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  padding: $spacing-xl;
+  color: $color-text-tertiary;
+  font-size: $font-size-sm;
+}
