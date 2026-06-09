@@ -1,0 +1,227 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  background: $color-bg-page;
+}
+
+.statsBar {
+  display: flex;
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  padding: $spacing-xl $page-padding;
+  gap: $spacing-lg;
+}
+
+.statItem {
+  flex: 1;
+  text-align: center;
+  color: $color-text-white;
+}
+
+.statValue {
+  display: block;
+  font-size: 48rpx;
+  font-weight: $font-weight-bold;
+  line-height: 1.2;
+}
+
+.statLabel {
+  font-size: $font-size-xs;
+  opacity: 0.9;
+}
+
+.datePicker {
+  display: flex;
+  background: $color-bg-card;
+  padding: $spacing-md 0;
+  border-bottom: 1rpx solid $color-divider;
+  white-space: nowrap;
+}
+
+.dateItem {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $spacing-sm $spacing-lg;
+  margin: 0 $spacing-xs;
+  border-radius: $radius-lg;
+  min-width: 100rpx;
+
+  &.active {
+    background: rgba(37, 99, 235, 0.1);
+  }
+}
+
+.dateWeek {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  margin-bottom: 4rpx;
+
+  .active & {
+    color: $color-primary;
+  }
+}
+
+.dateDay {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+
+  .active & {
+    color: $color-primary;
+  }
+}
+
+.dateHeader {
+  padding: $spacing-lg $page-padding $spacing-md;
+}
+
+.dateTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.listContainer {
+  padding: 0 $page-padding $spacing-xl;
+}
+
+.card {
+  background: $color-bg-card;
+  border-radius: $radius-xl;
+  padding: $spacing-xl;
+  margin-bottom: $spacing-lg;
+  box-shadow: $shadow-card;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: $spacing-lg;
+}
+
+.cardHeaderLeft {
+  flex: 1;
+}
+
+.cardTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-xs;
+}
+
+.cardTime {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}
+
+.badgeRow {
+  display: flex;
+  gap: $spacing-sm;
+}
+
+.badgeOrange {
+  background: rgba(245, 158, 11, 0.1);
+  color: #D97706;
+  padding: 6rpx $spacing-md;
+  border-radius: $radius-sm;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+}
+
+.statsRow {
+  display: flex;
+  gap: $spacing-md;
+  margin-bottom: $spacing-lg;
+  padding: $spacing-md;
+  background: $color-bg-page;
+  border-radius: $radius-lg;
+}
+
+.statBox {
+  flex: 1;
+  text-align: center;
+}
+
+.statBoxValue {
+  display: block;
+  font-size: 36rpx;
+  font-weight: $font-weight-bold;
+}
+
+.statBoxLabel {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.sectionLabel {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-md;
+}
+
+.noCheckInSection {
+  margin-bottom: $spacing-lg;
+  padding-top: $spacing-lg;
+  border-top: 1rpx solid $color-divider;
+}
+
+.noCheckInItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-md;
+  background: rgba(245, 158, 11, 0.05);
+  border-radius: $radius-md;
+  margin-bottom: $spacing-sm;
+}
+
+.noCheckInInfo {
+  flex: 1;
+}
+
+.noCheckInName {
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  color: $color-text-primary;
+  margin-bottom: 4rpx;
+}
+
+.noCheckInDevice {
+  font-size: $font-size-xs;
+  color: $color-text-secondary;
+}
+
+.reservationsSection {
+  padding-top: $spacing-lg;
+  border-top: 1rpx solid $color-divider;
+}
+
+.reservationItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-md;
+  background: $color-bg-page;
+  border-radius: $radius-md;
+  margin-bottom: $spacing-sm;
+}
+
+.reservationInfo {
+  flex: 1;
+}
+
+.reservationName {
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  color: $color-text-primary;
+  margin-bottom: 4rpx;
+}
+
+.reservationDevice {
+  font-size: $font-size-xs;
+  color: $color-text-secondary;
+}

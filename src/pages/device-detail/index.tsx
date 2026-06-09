@@ -51,10 +51,18 @@ const DeviceDetailPage: React.FC = () => {
   };
 
   const handleReserve = () => {
-    if (!device || selectedSlots.length === 0) {
-      Taro.showToast({ title: '请选择预约时段', icon: 'none' });
+    if (!device) return;
+    
+    if (device.status !== 'available') {
+      Taro.showToast({ title: '该设备当前不可预约', icon: 'none' });
       return;
     }
+    
+    if (selectedSlots.length === 0) {
+      Taro.showToast({ title: '请先选择预约时段', icon: 'none' });
+      return;
+    }
+    
     console.log('[DeviceDetail] 提交预约:', device.id, selectedDate, selectedSlots);
     Taro.navigateTo({
       url: `/pages/submit-reservation/index?deviceId=${device.id}&date=${selectedDate}&slots=${selectedSlots.join(',')}`

@@ -83,7 +83,7 @@ const SubmitReservationPage: React.FC = () => {
       deviceId: device.id,
       deviceName: device.name,
       labId: device.labId,
-      labName: '物理实验室',
+      labName: device.labName,
       date: date || formatDate(new Date()),
       startTime,
       endTime,

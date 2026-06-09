@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, Textarea } from '@tarojs/components';
 import Taro, { useRouter } from '@tarojs/taro';
 import classnames from 'classnames';
 import { reservations } from '@/data/reservations';
+import { Reservation } from '@/types';
 import styles from './index.module.scss';
 
 const usageResults = [
@@ -14,9 +15,17 @@ const usageResults = [
 const CheckoutFeedbackPage: React.FC = () => {
   const router = useRouter();
   const id = router.params.id as string;
+  const [reservation, setReservation] = useState<Reservation | null>(null);
   const [usageResult, setUsageResult] = useState('');
   const [abnormalFeedback, setAbnormalFeedback] = useState('');
   const [remark, setRemark] = useState('');
+
+  useEffect(() => {
+    const found = reservations.find(r => r.id === id);
+    if (found) {
+      setReservation(found);
+    }
+  }, [id]);
 
   const handleSubmit = () => {
     if (!usageResult) {
@@ -38,15 +47,26 @@ const CheckoutFeedbackPage: React.FC = () => {
     setTimeout(() => Taro.switchTab({ url: '/pages/checkin/index' }), 1000);
   };
 
+  if (!reservation) {
+    return (
+      <ScrollView className={styles.page} scrollY>
+        <View className={styles.section}>
+          <Text>加载中...</Text>
+        </View>
+      </ScrollView>
+    );
+  }
+
   return (
     <ScrollView className={styles.page} scrollY>
       <View className={styles.section}>
         <Text className={styles.sectionTitle}>📋 预约信息</Text>
         <View className={styles.infoBox}>
-          <Text>精密电子显微镜 (JEM-2100){'\n'}</Text>
-          <Text>位置: 物理实验楼 B201{'\n'}</Text>
-          <Text>时段: 今天 14:00-16:00{'\n'}</Text>
-          <Text>签到: 13:55</Text>
+          <Text style={{ fontWeight: 600, color: '#0F172A' }}>{reservation.deviceName}{'\n'}</Text>
+          <Text>🏢 实验室: {reservation.labName}{'\n'}</Text>
+          <Text>📅 日期: {reservation.date}{'\n'}</Text>
+          <Text>⏰ 时段: {reservation.startTime}-{reservation.endTime}{'\n'}</Text>
+          <Text>✅ 签到时间: {reservation.checkInTime}</Text>
         </View>
       </View>
 

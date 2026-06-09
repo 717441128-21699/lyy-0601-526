@@ -1,0 +1,207 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  background: $color-bg-page;
+}
+
+.header {
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  padding: 64rpx $page-padding;
+  text-align: center;
+  color: $color-text-white;
+}
+
+.headerLabel {
+  font-size: $font-size-md;
+  opacity: 0.9;
+}
+
+.headerScore {
+  display: block;
+  font-size: 96rpx;
+  font-weight: $font-weight-bold;
+  margin: $spacing-md 0;
+  line-height: 1;
+}
+
+.headerLevel {
+  display: inline-block;
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  background: $color-text-white;
+  padding: $spacing-xs $spacing-lg;
+  border-radius: $radius-round;
+}
+
+.headerDesc {
+  display: block;
+  font-size: $font-size-sm;
+  opacity: 0.9;
+  margin-top: $spacing-md;
+}
+
+.content {
+  padding: $spacing-lg $page-padding;
+}
+
+.card {
+  background: $color-bg-card;
+  border-radius: $radius-xl;
+  padding: $spacing-xl;
+  margin-bottom: $spacing-lg;
+  box-shadow: $shadow-card;
+}
+
+.cardHeader {
+  margin-bottom: $spacing-lg;
+}
+
+.cardTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.rulesList {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+.ruleItem {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  line-height: 1.6;
+}
+
+.recordItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-md;
+  background: $color-bg-page;
+  border-radius: $radius-md;
+  margin-bottom: $spacing-sm;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.recordLeft {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  flex: 1;
+}
+
+.recordIcon {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: $radius-round;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24rpx;
+  font-weight: $font-weight-bold;
+  color: $color-text-white;
+  flex-shrink: 0;
+
+  &.iconGreen {
+    background: $color-success;
+  }
+
+  &.iconRed {
+    background: $color-error;
+  }
+}
+
+.recordContent {
+  flex: 1;
+}
+
+.recordTitle {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $color-text-primary;
+  margin-bottom: 4rpx;
+}
+
+.recordDate {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.recordPoints {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-bold;
+  margin-left: $spacing-md;
+}
+
+.violationItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-md;
+  background: rgba(239, 68, 68, 0.05);
+  border-radius: $radius-md;
+  margin-bottom: $spacing-sm;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.violationContent {
+  flex: 1;
+}
+
+.violationHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: $spacing-sm;
+  margin-bottom: 4rpx;
+}
+
+.violationTitle {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $color-error;
+  flex: 1;
+}
+
+.statusBadge {
+  padding: 4rpx $spacing-sm;
+  border-radius: $radius-sm;
+  font-size: $font-size-xs;
+  flex-shrink: 0;
+
+  &[data-status='pending'] {
+    background: rgba(245, 158, 11, 0.1);
+    color: #D97706;
+  }
+
+  &[data-status='appealed'] {
+    background: rgba(59, 130, 246, 0.1);
+    color: #2563EB;
+  }
+
+  &[data-status='resolved'] {
+    background: rgba(16, 185, 129, 0.1);
+    color: #059669;
+  }
+}
+
+.violationDate {
+  font-size: $font-size-xs;
+  color: $color-text-secondary;
+}
+
+.violationPoints {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-bold;
+  color: $color-error;
+  margin-left: $spacing-md;
+}

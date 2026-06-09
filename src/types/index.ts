@@ -30,11 +30,16 @@ export interface Device {
   labName: string;
   type: string;
   model: string;
+  code: string;
+  location: string;
   description: string;
   image: string;
-  status: 'available' | 'occupied' | 'maintenance' | 'reserved';
+  status: 'available' | 'occupied' | 'maintenance' | 'reserved' | 'unavailable';
+  openTime: string;
+  maxUsageHours: number;
+  advanceBookingHours: number;
   usageRules: string;
-  safetyRequirement: string;
+  safetyRequirements: string[];
   isFavorite?: boolean;
 }
 
@@ -51,6 +56,7 @@ export interface Reservation {
   id: string;
   deviceId: string;
   deviceName: string;
+  labId: string;
   labName: string;
   userId: string;
   userName: string;
@@ -60,11 +66,13 @@ export interface Reservation {
   endTime: string;
   status: 'pending' | 'approved' | 'rejected' | 'cancelled' | 'completed' | 'noShow';
   purpose: string;
+  remark?: string;
   teamMembers: TeamMember[];
   checkInTime?: string;
   checkOutTime?: string;
   usageResult?: string;
   abnormalFeedback?: string;
+  checkoutRemark?: string;
   createdAt: string;
   auditor?: string;
   auditRemark?: string;

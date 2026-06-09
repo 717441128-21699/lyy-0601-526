@@ -1,13 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, Textarea } from '@tarojs/components';
 import Taro from '@tarojs/taro';
+import classnames from 'classnames';
 import { violationRecords } from '@/data/reservations';
-import styles from '../common.module.scss';
+import { ViolationRecord } from '@/types';
+import StatusBadge from '@/components/StatusBadge';
+import styles from './index.module.scss';
+
+const statusTextMap: Record<string, string> = {
+  pending: '待处理',
+  appealed: '申诉中',
+  resolved: '已处理',
+};
 
 const AppealPage: React.FC = () => {
   const [selectedId, setSelectedId] = useState('');
   const [reason, setReason] = useState('');
   const [contact, setContact] = useState('');
+  const [records, setRecords] = useState<ViolationRecord[]>([]);
+
+  useEffect(() => {
+    setRecords([...violationRecords]);
+  }, []);
+
+  const getStatusText = (status: string) => statusTextMap[status] || status;
 
   const handleSubmit = () => {
     if (!selectedId) {
@@ -19,6 +35,13 @@ const AppealPage: React.FC = () => {
       return;
     }
 
+    const idx = violationRecords.findIndex(r => r.id === selectedId);
+    if (idx !== -1) {
+      violationRecords[idx].status = 'appealed';
+      violationRecords[idx].appealContent = reason;
+      setRecords([...violationRecords]);
+    }
+
     console.log('[Appeal] 提交申诉:', { selectedId, reason, contact });
     Taro.showToast({ title: '申诉已提交', icon: 'success' });
     setTimeout(() => Taro.navigateBack(), 1000);
@@ -26,36 +49,45 @@ const AppealPage: React.FC = () => {
 
   return (
     <ScrollView className={styles.page} scrollY>
-      <View className={styles.formSection}>
-        <Text className={styles.formTitle}>⚠️ 选择申诉记录</Text>
-        {violationRecords.length > 0 ? violationRecords.map(record => (
+      <View className={styles.section}>
+        <Text className={styles.sectionTitle}>⚠️ 选择申诉记录</Text>
+        {records.length > 0 ? records.map(record => (
           <View
             key={record.id}
-            className={styles.listItem}
+            className={classnames(styles.recordItem, selectedId === record.id && styles.selected)}
             onClick={() => setSelectedId(record.id)}
-            style={{ border: selectedId === record.id ? '2rpx solid #2563EB' : undefined }}
           >
-            <View className={styles.itemLeft}>
-              <View className={`${styles.itemIcon} ${styles.iconRed}`}><Text>⚠️</Text></View>
-              <View className={styles.itemContent}>
-                <Text className={styles.itemTitle}>{record.reason}</Text>
-                <Text className={styles.itemDesc}>{record.date} · 扣{record.pointsDeducted}分</Text>
+            <View className={styles.recordLeft}>
+              <View className={styles.recordIcon}><Text>⚠️</Text></View>
+              <View className={styles.recordContent}>
+                <View className={styles.recordHeader}>
+                  <Text className={styles.recordTitle}>{record.description}</Text>
+                  <View className={styles.statusBadge} data-status={record.status}>
+                    <Text>{getStatusText(record.status)}</Text>
+                  </View>
+                </View>
+                <View className={styles.recordMeta}>
+                  <Text className={styles.recordDate}>📅 {record.date}</Text>
+                  <Text className={styles.recordPoints}>❌ 扣{record.scoreDeducted}分</Text>
+                </View>
               </View>
             </View>
-            {selectedId === record.id && <Text style={{ color: '#2563EB' }}>✓</Text>}
+            {selectedId === record.id && <Text className={styles.checkIcon}>✓</Text>}
           </View>
         )) : (
-          <Text style={{ textAlign: 'center', color: '#94A3B8', padding: 32 }}>暂无违规记录</Text>
+          <View className={styles.empty}>
+            <Text className={styles.emptyText}>暂无违规记录</Text>
+          </View>
         )}
       </View>
 
-      <View className={styles.formSection}>
-        <Text className={styles.formTitle}>📝 申诉信息</Text>
+      <View className={styles.section}>
+        <Text className={styles.sectionTitle}>📝 申诉信息</Text>
         <View className={styles.formItem}>
           <Text className={styles.formLabel}>申诉理由 *</Text>
           <Textarea
-            className={styles.formTextarea}
-            placeholder="请详细描述申诉理由..."
+            className={styles.textarea}
+            placeholder="请详细描述申诉理由，包括具体情况和相关证据..."
             value={reason}
             onInput={(e) => setReason(e.detail.value)}
           />
@@ -63,8 +95,8 @@ const AppealPage: React.FC = () => {
         <View className={styles.formItem}>
           <Text className={styles.formLabel}>联系方式</Text>
           <Textarea
-            className={styles.formInput}
-            placeholder="手机号（可选，方便联系）"
+            className={styles.input}
+            placeholder="手机号（可选，方便联系您核实情况）"
             value={contact}
             onInput={(e) => setContact(e.detail.value)}
           />

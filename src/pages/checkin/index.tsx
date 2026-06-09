@@ -79,6 +79,14 @@ const CheckinPage: React.FC = () => {
       success: async (res) => {
         if (res.confirm) {
           console.log('[CheckinPage] 确认签到:', reservationId);
+          const idx = reservations.findIndex(r => r.id === reservationId);
+          if (idx !== -1) {
+            const now = new Date();
+            const checkInTime = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+            reservations[idx].checkInTime = checkInTime;
+            reservations[idx].status = 'approved';
+            console.log('[CheckinPage] 更新签到时间:', checkInTime);
+          }
           Taro.showToast({ title: '签到成功', icon: 'success' });
           setShowQRCode(false);
           loadData();

@@ -5,6 +5,7 @@ export const reservations: Reservation[] = [
     id: 'r001',
     deviceId: 'd001',
     deviceName: '高性能工作站',
+    labId: 'l001',
     labName: '计算机基础实验室',
     userId: 'u001',
     userName: '张同学',
@@ -25,6 +26,7 @@ export const reservations: Reservation[] = [
     id: 'r002',
     deviceId: 'd002',
     deviceName: 'GPU服务器',
+    labId: 'l002',
     labName: '人工智能实验室',
     userId: 'u001',
     userName: '张同学',
@@ -41,6 +43,7 @@ export const reservations: Reservation[] = [
     id: 'r003',
     deviceId: 'd009',
     deviceName: 'Arduino开发套件',
+    labId: 'l005',
     labName: '嵌入式系统实验室',
     userId: 'u001',
     userName: '张同学',
@@ -64,6 +67,7 @@ export const reservations: Reservation[] = [
     id: 'r004',
     deviceId: 'd004',
     deviceName: 'FPGA开发板',
+    labId: 'l005',
     labName: '嵌入式系统实验室',
     userId: 'u001',
     userName: '张同学',
@@ -80,6 +84,7 @@ export const reservations: Reservation[] = [
     id: 'r005',
     deviceId: 'd007',
     deviceName: '云计算服务器集群',
+    labId: 'l002',
     labName: '人工智能实验室',
     userId: 'u001',
     userName: '张同学',
@@ -98,6 +103,7 @@ export const reservations: Reservation[] = [
     id: 'r006',
     deviceId: 'd010',
     deviceName: 'iMac一体机',
+    labId: 'l004',
     labName: '软件工程实验室',
     userId: 'u001',
     userName: '张同学',
@@ -116,6 +122,7 @@ export const reservations: Reservation[] = [
     id: 'r007',
     deviceId: 'd003',
     deviceName: '网络交换机',
+    labId: 'l003',
     labName: '网络安全实验室',
     userId: 'u002',
     userName: '赵同学',
@@ -132,6 +139,7 @@ export const reservations: Reservation[] = [
     id: 'r008',
     deviceId: 'd005',
     deviceName: '4K显示器',
+    labId: 'l001',
     labName: '计算机基础实验室',
     userId: 'u003',
     userName: '孙同学',
@@ -169,7 +177,14 @@ export const violationRecords: ViolationRecord[] = [
   },
 ];
 
-export const todaySchedule: Schedule = {
+export interface ScheduleWithStats extends Schedule {
+  pendingCount: number;
+  approvedCount: number;
+  noCheckInCount: number;
+  noCheckInList: Reservation[];
+}
+
+export const todaySchedule: ScheduleWithStats = {
   id: 's001',
   date: '2026-06-10',
   labId: 'l001',
@@ -178,5 +193,28 @@ export const todaySchedule: Schedule = {
   assistantName: '李实验员',
   startTime: '08:00',
   endTime: '22:00',
-  reservations: reservations.filter(r => r.date === '2026-06-10'),
+  reservations: reservations.filter(r => r.date === '2026-06-10' && r.labId === 'l001'),
+  pendingCount: reservations.filter(r => r.date === '2026-06-10' && r.labId === 'l001' && r.status === 'pending').length,
+  approvedCount: reservations.filter(r => r.date === '2026-06-10' && r.labId === 'l001' && r.status === 'approved').length,
+  noCheckInCount: reservations.filter(r => r.date === '2026-06-10' && r.labId === 'l001' && r.status === 'approved' && !r.checkInTime).length,
+  noCheckInList: reservations.filter(r => r.date === '2026-06-10' && r.labId === 'l001' && r.status === 'approved' && !r.checkInTime),
 };
+
+export const scheduleList: ScheduleWithStats[] = [
+  todaySchedule,
+  {
+    id: 's002',
+    date: '2026-06-10',
+    labId: 'l002',
+    labName: '人工智能实验室',
+    assistantId: 'a001',
+    assistantName: '李实验员',
+    startTime: '09:00',
+    endTime: '18:00',
+    reservations: reservations.filter(r => r.date === '2026-06-10' && r.labId === 'l002'),
+    pendingCount: reservations.filter(r => r.date === '2026-06-10' && r.labId === 'l002' && r.status === 'pending').length,
+    approvedCount: reservations.filter(r => r.date === '2026-06-10' && r.labId === 'l002' && r.status === 'approved').length,
+    noCheckInCount: reservations.filter(r => r.date === '2026-06-10' && r.labId === 'l002' && r.status === 'approved' && !r.checkInTime).length,
+    noCheckInList: reservations.filter(r => r.date === '2026-06-10' && r.labId === 'l002' && r.status === 'approved' && !r.checkInTime),
+  },
+];
