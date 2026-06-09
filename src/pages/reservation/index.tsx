@@ -120,6 +120,10 @@ const ReservationPage: React.FC = () => {
       success: async (res) => {
         if (res.confirm) {
           console.log('[ReservationPage] 取消预约:', reservationId);
+          const idx = reservations.findIndex(r => r.id === reservationId);
+          if (idx !== -1) {
+            reservations[idx].status = 'cancelled';
+          }
           Taro.showToast({ title: '取消成功', icon: 'success' });
           loadData();
         }

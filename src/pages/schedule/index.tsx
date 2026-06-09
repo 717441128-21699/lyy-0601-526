@@ -55,13 +55,18 @@ const SchedulePage: React.FC = () => {
   }, [selectedDate, today]);
 
   const totalStats = useMemo(() => {
-    const dayReservations = reservations.filter(r => r.date === selectedDate);
+    if (selectedDate !== today) {
+      return { pending: 0, approved: 0, noCheckIn: 0 };
+    }
+    const dayReservations = reservations.filter(
+      r => r.date === selectedDate && assistantLabs.includes(r.labId)
+    );
     return {
       pending: dayReservations.filter(r => r.status === 'pending').length,
       approved: dayReservations.filter(r => r.status === 'approved').length,
       noCheckIn: dayReservations.filter(r => r.status === 'approved' && !r.checkInTime).length,
     };
-  }, [selectedDate]);
+  }, [selectedDate, today, assistantLabs]);
 
   const formatDate = (dateStr: string) => {
     const d = new Date(dateStr);

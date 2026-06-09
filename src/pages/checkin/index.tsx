@@ -42,10 +42,19 @@ const CheckinPage: React.FC = () => {
       const today = formatDate(new Date());
       const userReservations = reservations.filter(r => r.userId === user.id);
 
-      const current = userReservations.find(
+      const inUseList = userReservations.filter(
         r => r.status === 'approved' && r.checkInTime && !r.checkOutTime
       );
-      setCurrentReservation(current || null);
+      
+      let current = null;
+      if (inUseList.length > 0) {
+        if (selectedCheckinId) {
+          current = inUseList.find(r => r.id === selectedCheckinId) || inUseList[0];
+        } else {
+          current = inUseList[0];
+        }
+      }
+      setCurrentReservation(current);
 
       const pending = userReservations.filter(
         r => r.status === 'approved' && !r.checkInTime
@@ -59,7 +68,7 @@ const CheckinPage: React.FC = () => {
 
       setLoading(false);
     }, 300);
-  }, [activeTab, user.id]);
+  }, [activeTab, user.id, selectedCheckinId]);
 
   const handleCheckIn = async (reservation: Reservation) => {
     console.log('[CheckinPage] 签到:', reservation.id);
@@ -88,15 +97,15 @@ const CheckinPage: React.FC = () => {
             reservations[idx].checkInTime = checkInTime;
             reservations[idx].status = 'approved';
             console.log('[CheckinPage] 更新签到时间:', checkInTime);
-            
-            const updatedReservation = reservations[idx];
-            setCurrentReservation(updatedReservation);
           }
           Taro.showToast({ title: '签到成功', icon: 'success' });
           setShowQRCode(false);
           setSelectedCheckinId('');
           setActiveTab('current');
-          loadData();
+          
+          setTimeout(() => {
+            loadData();
+          }, 100);
         }
       }
     });
